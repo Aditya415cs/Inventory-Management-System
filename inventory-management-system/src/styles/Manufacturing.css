@@ -1,0 +1,10 @@
+.manufacturing-container {
+  padding: 20px;
+  color: white;
+}
+
+.batch {
+  background: #222;
+  padding: 15px;
+  border-radius: 8px;
+}

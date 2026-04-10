@@ -1,0 +1,19 @@
+.order-container {
+  padding: 20px;
+  color: white;
+}
+
+.order-box {
+  background: #1e1e1e;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+
+button {
+  background: #4caf50;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: white;
+}

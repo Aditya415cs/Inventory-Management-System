@@ -1,0 +1,15 @@
+.report-container {
+  padding: 20px;
+  color: white;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #1e1e1e;
+  margin: 8px 0;
+  padding: 10px;
+}
