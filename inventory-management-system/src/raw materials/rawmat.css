@@ -1,0 +1,143 @@
+/* 🌌 Background */
+body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  font-family: "Inter", sans-serif;
+}
+
+/* Container */
+.raw-container {
+  padding: 30px;
+  color: #e2e8f0;
+}
+
+/* Header Section */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.header h1 {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+/* Search Bar */
+.search {
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #1e293b;
+  color: white;
+  width: 220px;
+}
+
+/* Filter Buttons */
+.filters {
+  margin-bottom: 20px;
+}
+
+.filters button {
+  margin-right: 10px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  background: #1e293b;
+  color: #cbd5f5;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.filters button:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+/* Table Card */
+.table-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Header */
+th {
+  text-align: left;
+  padding: 15px;
+  font-size: 13px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Rows */
+td {
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Row hover */
+tr {
+  transition: all 0.2s ease;
+}
+
+tr:hover {
+  background: rgba(59, 130, 246, 0.08);
+}
+
+/* Status */
+.status {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Pending */
+.pending {
+  background: rgba(251, 191, 36, 0.15);
+  color: #facc15;
+}
+
+/* Delivered */
+.delivered {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+/* Button */
+button.action-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Disabled */
+button:disabled {
+  background: #475569;
+  cursor: not-allowed;
+}
+
+/* Scroll Fix */
+.table-card {
+  overflow-x: auto;
+}

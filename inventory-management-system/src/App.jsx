@@ -1,5 +1,5 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-
+import Landing from "./landingpage.jsx";
 
 // Pages
 import Dashboard from "./Dashboard";
@@ -15,23 +15,24 @@ function Layout({ children }) {
 
   return (
     <div className="layout">
-
       {/* Sidebar */}
       <div className="sidebar">
         <h2>📦 IMS</h2>
 
-        <button onClick={() => navigate("/")}>Dashboard</button>
-        <button onClick={() => navigate("/inventory")}>Inventory</button>
-        <button onClick={() => navigate("/order-processing")}>Orders</button>
-        <button onClick={() => navigate("/manufacturing")}>Manufacturing</button>
-        <button onClick={() => navigate("/reporting")}>Reports</button>
-        <button onClick={() => navigate("/ui-accessibility")}>UI</button>
+        <button onClick={() => navigate("/app")}>Dashboard</button>
+        <button onClick={() => navigate("/app/inventory")}>Inventory</button>
+        <button onClick={() => navigate("/app/order-processing")}>
+          Orders
+        </button>
+        <button onClick={() => navigate("/app/manufacturing")}>
+          Manufacturing
+        </button>
+        <button onClick={() => navigate("/app/reporting")}>Reports</button>
+        <button onClick={() => navigate("/app/ui-accessibility")}>UI</button>
       </div>
 
       {/* Main Content */}
-      <div className="main">
-        {children}
-      </div>
+      <div className="main">{children}</div>
     </div>
   );
 }
@@ -39,7 +40,6 @@ function Layout({ children }) {
 function App() {
   return (
     <Routes>
-
       {/* Dashboard */}
       <Route
         path="/"
@@ -99,7 +99,6 @@ function App() {
           </Layout>
         }
       />
-
     </Routes>
   );
 }
