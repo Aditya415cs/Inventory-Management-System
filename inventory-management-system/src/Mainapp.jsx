@@ -1,7 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Landing from "./landingpage.jsx";
 import App from "./App"; // your dashboard app
+import Customer from "./customers/customer";
 
+<Route path="/customer" element={<Customer />} />
 const MainApp = () => {
   return (
     <Routes>
@@ -11,7 +13,8 @@ const MainApp = () => {
 
       {/* After login → full app */}
       <Route path="/app/*" element={<App />} />
-
+      
+      <Route path="/customers" element={<Customer />} />
     </Routes>
   );
 };

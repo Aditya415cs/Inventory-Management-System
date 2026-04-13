@@ -1,0 +1,73 @@
+/* Layout */
+.store-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #020617;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Profile */
+.profile {
+  width: 220px;
+  background: #020617;
+  padding: 20px;
+  border-right: 1px solid #1e293b;
+}
+
+/* Store */
+.store {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Product */
+.product-card {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.product-card button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  border-radius: 6px;
+}
+
+/* Cart */
+.cart {
+  width: 250px;
+  background: #020617;
+  padding: 20px;
+  border-left: 1px solid #1e293b;
+}
+
+/* Cart Item */
+.cart-item {
+  background: #1e293b;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+/* Checkout */
+.checkout {
+  width: 100%;
+  padding: 10px;
+  background: green;
+  border: none;
+  color: white;
+  margin-top: 10px;
+  border-radius: 6px;
+}
