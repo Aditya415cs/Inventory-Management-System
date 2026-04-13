@@ -40,13 +40,8 @@ const Landing = () => {
           <h2>🏭 Manufacturer</h2>
           <p>Supply raw materials and manage deliveries</p>
 
-          <button onClick={() => navigate("/signup/manufacturer")}>
-            Sign Up
-          </button>
-
-          <button onClick={() => navigate("/signin/manufacturer")}>
-            Sign In
-          </button>
+          <button onClick={() => navigate("/raw material supplier")}>Sign Up</button>
+          <button onClick={() => navigate("/raw material supplier")}>Sign In</button>
         </div>
 
         {/* Customer */}

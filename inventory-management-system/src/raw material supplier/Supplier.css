@@ -1,0 +1,76 @@
+/* Page */
+.supplier-container {
+  padding: 30px;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  min-height: 100vh;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Heading */
+.supplier-container h1 {
+  margin-bottom: 5px;
+}
+
+.supplier-container p {
+  color: #94a3b8;
+  margin-bottom: 20px;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background: #1e293b;
+}
+
+tr {
+  border-bottom: 1px solid #334155;
+}
+
+/* Status */
+.status {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.status.pending {
+  background: orange;
+}
+
+.status.delivered {
+  background: green;
+}
+
+/* Button */
+.deliver-btn {
+  padding: 6px 12px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.deliver-btn:hover {
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+}
+
+/* Done */
+.done {
+  color: #22c55e;
+  font-weight: bold;
+}
