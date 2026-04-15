@@ -36,22 +36,10 @@ const Landing = () => {
         </div>
 
         {/* Manufacturer */}
-        <div className="role-card">
-          <h2>🏭 Manufacturer</h2>
-          <p>Supply raw materials and manage deliveries</p>
 
-          <button onClick={() => navigate("/raw material supplier")}>Sign Up</button>
-          <button onClick={() => navigate("/raw material supplier")}>Sign In</button>
-        </div>
 
         {/* Customer */}
-        <div className="role-card">
-          <h2>🛒 Customer</h2>
-          <p>Buy products from the company</p>
 
-          <button onClick={() => navigate("/customers")}>Sign Up</button>
-          <button onClick={() => navigate("/customers")}>Sign In</button>
-        </div>
       </div>
       {showModal && (
         <div className="modal-overlay">
