@@ -49,7 +49,7 @@ export default function Dashboard() {
             .length,
         });
         // ML API call
-        const mlRes = await fetch("https://raw-material-predictor-fastapi.onrender.com/predict-auto");
+        const mlRes = await fetch("http://127.0.0.1:8001/predict-auto");
 
         if (!mlRes.ok) {
           throw new Error("ML API failed");
