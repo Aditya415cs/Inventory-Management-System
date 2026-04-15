@@ -21,6 +21,71 @@ const NEXT_STATUS: Record<string, string> = {
 const SALE_STAGES     = ["confirmed", "packing", "dispatched"];
 const PURCHASE_STAGES = ["ordered", "in_transit", "completed"];
 
+/* ═══════════════════════════════════════════════════════════
+   Timeline Component — Horizontal step-progress indicator
+   ═══════════════════════════════════════════════════════════ */
+function TimelineBar({
+  stages,
+  currentStatus,
+}: {
+  stages: string[];
+  currentStatus: string;
+}) {
+  const currentIdx = stages.indexOf(currentStatus);
+
+  return (
+    <div className="order-timeline">
+      <div className="timeline-label">Order Progress</div>
+      <div className="timeline-track">
+        {stages.map((stage, i) => {
+          const isCompleted = i < currentIdx;
+          const isActive    = i === currentIdx;
+          const isPending   = i > currentIdx;
+
+          // Connector before each step (except the first)
+          const connector =
+            i > 0 ? (
+              <div
+                key={`c-${i}`}
+                className={`timeline-connector ${
+                  i <= currentIdx ? "filled" : ""
+                }`}
+                style={{ animationDelay: `${i * 0.15}s` }}
+              />
+            ) : null;
+
+          return (
+            <span key={stage} style={{ display: "contents" }}>
+              {connector}
+              <div
+                className={`timeline-step ${
+                  isCompleted ? "is-completed" : ""
+                } ${isActive ? "is-active" : ""}`}
+              >
+                <div
+                  className={`step-dot ${
+                    isCompleted
+                      ? "completed"
+                      : isActive
+                        ? "active"
+                        : "pending"
+                  }`}
+                >
+                  {isCompleted ? "✓" : i + 1}
+                </div>
+                <span className="step-name">{STATUS_LABEL[stage]}</span>
+              </div>
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Main Page Component
+   ═══════════════════════════════════════════════════════════ */
 export default function OrderProcessing() {
   const [orders,    setOrders]    = useState<Order[]>([]);
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -73,104 +138,130 @@ export default function OrderProcessing() {
     }
   };
 
-  if (loading) return <div className="order-container"><p>Loading orders…</p></div>;
-  if (error)   return <div className="order-container"><p style={{color:"red"}}>Error: {error}</p></div>;
+  /* ── Loading / Error States ─────────────────── */
+  if (loading) {
+    return (
+      <div className="order-container">
+        <p style={{ color: "var(--text-secondary)" }}>Loading orders…</p>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="order-container">
+        <p style={{ color: "var(--accent-red)" }}>Error: {error}</p>
+      </div>
+    );
+  }
 
+  /* ── Render ─────────────────────────────────── */
   return (
     <div className="order-container">
       <h1>Order Processing</h1>
 
-      {/* Tabs */}
-      <div style={{display:"flex", gap:8, marginBottom:16}}>
+      {/* ── Tabs ──────────────────────────────── */}
+      <div className="order-tabs">
         <button
+          className={`order-tab ${tab === "sale" ? "active" : ""}`}
           onClick={() => { setTab("sale"); setSelected(null); }}
-          style={{padding:"8px 20px", borderRadius:8, border:"none", cursor:"pointer",
-            background: tab === "sale" ? "#3b82f6" : "#1e293b", color:"white"}}
-        >Sales Orders</button>
+        >
+          🛒 Sales Orders
+        </button>
         <button
+          className={`order-tab ${tab === "purchase" ? "active" : ""}`}
           onClick={() => { setTab("purchase"); setSelected(null); }}
-          style={{padding:"8px 20px", borderRadius:8, border:"none", cursor:"pointer",
-            background: tab === "purchase" ? "#3b82f6" : "#1e293b", color:"white"}}
-        >Purchase Orders</button>
+        >
+          📥 Purchase Orders
+        </button>
       </div>
 
-      {/* Stats */}
-      <div style={{display:"flex", gap:12, marginBottom:16}}>
+      {/* ── Stat Cards ────────────────────────── */}
+      <div className="order-stats">
         {stages.map(s => (
-          <div className="order-box" key={s} style={{flex:1, textAlign:"center"}}>
-            <p style={{color:"#94a3b8", fontSize:"0.8rem"}}>{STATUS_LABEL[s]}</p>
-            <p style={{fontSize:"1.4rem", fontWeight:700}}>{byStage(s).length}</p>
+          <div className="order-stat-card" key={s}>
+            <p className="order-stat-label">{STATUS_LABEL[s]}</p>
+            <p className="order-stat-value">{byStage(s).length}</p>
           </div>
         ))}
       </div>
 
-      {/* Kanban + Detail */}
-      <div style={{display:"flex", gap:16}}>
-        {/* Columns */}
-        <div style={{display:"flex", gap:12, flex:1}}>
+      {/* ── Kanban + Detail ───────────────────── */}
+      <div className="order-body">
+        {/* Kanban Columns */}
+        <div className="order-kanban">
           {stages.map(stage => (
-            <div key={stage} style={{flex:1, background:"#0f172a", borderRadius:10, padding:12}}>
-              <h3 style={{color:"#94a3b8", fontSize:"0.85rem", marginBottom:10}}>
-                {STATUS_LABEL[stage]} ({byStage(stage).length})
-              </h3>
-              {byStage(stage).length === 0
-                ? <p style={{color:"#475569", fontSize:"0.8rem"}}>No orders</p>
-                : byStage(stage).map(o => (
+            <div key={stage} className="kanban-column">
+              <div className="kanban-header">
+                {STATUS_LABEL[stage]}
+                <span className="count-badge">{byStage(stage).length}</span>
+              </div>
+
+              {byStage(stage).length === 0 ? (
+                <p className="kanban-empty">No orders</p>
+              ) : (
+                byStage(stage).map(o => (
                   <div
                     key={o.order_id}
+                    className={`order-card ${selected?.order_id === o.order_id ? "selected" : ""}`}
                     onClick={() => setSelected(o)}
-                    style={{
-                      background: selected?.order_id === o.order_id ? "#1e3a5f" : "#1e293b",
-                      borderRadius:8, padding:10, marginBottom:8, cursor:"pointer",
-                      border: selected?.order_id === o.order_id ? "1px solid #3b82f6" : "1px solid transparent"
-                    }}
                   >
-                    <p style={{fontFamily:"monospace", fontSize:"0.75rem", color:"#94a3b8"}}>#{o.order_id.slice(0,8)}…</p>
-                    <p style={{fontSize:"0.82rem"}}>{getName(o)}</p>
-                    <p style={{fontSize:"0.75rem", color:"#64748b"}}>{new Date(o.created_at).toLocaleDateString("en-IN")}</p>
+                    <p className="order-card-id">#{o.order_id.slice(0, 8)}…</p>
+                    <p className="order-card-name">{getName(o)}</p>
+                    <p className="order-card-date">
+                      {new Date(o.created_at).toLocaleDateString("en-IN")}
+                    </p>
                     {NEXT_STATUS[o.status] && (
                       <button
+                        className="order-card-advance"
                         onClick={e => { e.stopPropagation(); advance(o); }}
-                        style={{marginTop:6, background:"#1e3a5f", color:"#93c5fd",
-                          border:"1px solid #2563eb", borderRadius:5, padding:"3px 10px",
-                          fontSize:"0.75rem", cursor:"pointer"}}
                       >
                         → {STATUS_LABEL[NEXT_STATUS[o.status]]}
                       </button>
                     )}
                   </div>
                 ))
-              }
+              )}
             </div>
           ))}
         </div>
 
-        {/* Detail pane */}
+        {/* ── Detail Pane with Timeline ────── */}
         {selected && (
-          <div style={{width:260, background:"#1e293b", borderRadius:10, padding:16, fontSize:"0.88rem", lineHeight:1.9}}>
-            <div style={{display:"flex", justifyContent:"space-between", marginBottom:12}}>
+          <div className="order-detail" key={selected.order_id}>
+            <div className="detail-header">
               <b>Order Detail</b>
-              <button onClick={() => setSelected(null)} style={{background:"none", border:"none", color:"#94a3b8", cursor:"pointer"}}>✕</button>
+              <button className="detail-close" onClick={() => setSelected(null)}>✕</button>
             </div>
-            <p><b>ID:</b> {selected.order_id}</p>
-            <p><b>Type:</b> {selected.type}</p>
-            <p><b>Status:</b> {STATUS_LABEL[selected.status]}</p>
-            <p><b>{tab === "sale" ? "Customer" : "Supplier"}:</b> {getName(selected)}</p>
-            <p><b>Date:</b> {new Date(selected.created_at).toLocaleDateString("en-IN")}</p>
-            {selected.notes && <p><b>Notes:</b> {selected.notes}</p>}
-            <div style={{marginTop:8}}>
+
+            {/* ★ TIMELINE ★ */}
+            <TimelineBar stages={stages} currentStatus={selected.status} />
+
+            <p className="detail-field"><b>ID:</b> {selected.order_id}</p>
+            <p className="detail-field"><b>Type:</b> {selected.type}</p>
+            <p className="detail-field"><b>Status:</b> {STATUS_LABEL[selected.status]}</p>
+            <p className="detail-field">
+              <b>{tab === "sale" ? "Customer" : "Supplier"}:</b> {getName(selected)}
+            </p>
+            <p className="detail-field">
+              <b>Date:</b> {new Date(selected.created_at).toLocaleDateString("en-IN")}
+            </p>
+            {selected.notes && (
+              <p className="detail-field"><b>Notes:</b> {selected.notes}</p>
+            )}
+
+            <div className="detail-products">
               <b>Products:</b>
-              <ul style={{paddingLeft:16, marginTop:4}}>
+              <ul>
                 {(selected.products || []).map((p, i) => (
-                  <li key={i} style={{fontSize:"0.82rem"}}>{p.product_code} × {p.quantity}</li>
+                  <li key={i}>{p.product_code} × {p.quantity}</li>
                 ))}
               </ul>
             </div>
+
             {NEXT_STATUS[selected.status] && (
               <button
+                className="detail-advance-btn"
                 onClick={() => advance(selected)}
-                style={{marginTop:12, background:"#1e3a5f", color:"#93c5fd",
-                  border:"1px solid #2563eb", borderRadius:6, padding:"6px 14px", cursor:"pointer"}}
               >
                 → Move to {STATUS_LABEL[NEXT_STATUS[selected.status]]}
               </button>

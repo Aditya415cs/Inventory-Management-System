@@ -1,72 +1,162 @@
+/* ═══════════════════════════════════════════════════════════
+   INVENTORY — Premium Dark UI
+   ═══════════════════════════════════════════════════════════ */
+
 .inventory-container {
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  padding: 4px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary);
+  animation: fadeIn 0.4s var(--ease-out);
 }
 
 .title {
-  margin-bottom: 20px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-bottom: 24px;
 }
 
-/* Stats */
+/* ── Stats Cards ────────────────────────────────────────── */
 .stats {
   display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 14px;
+  margin-bottom: 24px;
 }
 
-.card {
-  background: #1e293b;
-  color: white;
-  padding: 15px;
-  border-radius: 8px;
+.stats .card {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 18px 22px;
+  border-radius: var(--radius-lg);
   flex: 1;
   text-align: center;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  animation: fadeInUp 0.5s var(--ease-out) both;
+  position: relative;
+  overflow: hidden;
 }
+.stats .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-indigo), transparent);
+  opacity: 0;
+  transition: var(--transition);
+}
+.stats .card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-glow);
+}
+.stats .card:hover::before {
+  opacity: 1;
+}
+.stats .card:nth-child(1) { animation-delay: 0.05s; }
+.stats .card:nth-child(2) { animation-delay: 0.1s; }
+.stats .card:nth-child(3) { animation-delay: 0.15s; }
 
-/* Search */
+/* ── Search Box ─────────────────────────────────────────── */
 .search-box {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .search-box input {
-  padding: 8px;
-  width: 250px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  padding: 12px 18px;
+  width: 320px;
+  max-width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: var(--transition);
+}
+.search-box input::placeholder {
+  color: var(--text-muted);
+}
+.search-box input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* Table */
+/* ── Table ──────────────────────────────────────────────── */
 .inventory-table {
   width: 100%;
-  border-collapse: collapse;
-}
-
-.inventory-table th,
-.inventory-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  animation: fadeInUp 0.6s var(--ease-out) both;
 }
 
 .inventory-table th {
-  background-color: #0f172a;
-  color: white;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-/* Status colors */
+.inventory-table td {
+  padding: 13px 16px;
+  font-size: 0.88rem;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.2s ease;
+}
+
+.inventory-table tbody tr {
+  background: var(--bg-card);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.inventory-table tbody tr:nth-child(even) {
+  background: rgba(17, 28, 50, 0.4);
+}
+.inventory-table tbody tr:hover {
+  background: rgba(59, 130, 246, 0.06);
+}
+
+/* ── Status Badges ──────────────────────────────────────── */
 .status {
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.78rem;
+  padding: 4px 12px;
+  border-radius: 99px;
+  display: inline-block;
+  letter-spacing: 0.3px;
 }
 
 .in-stock {
-  color: green;
+  color: var(--accent-green);
+  background: rgba(34, 197, 94, 0.1);
 }
 
 .low-stock {
-  color: orange;
+  color: var(--accent-amber);
+  background: rgba(245, 158, 11, 0.1);
 }
 
 .out-of-stock {
-  color: red;
+  color: var(--accent-red);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* ── Detail Panel ───────────────────────────────────────── */
+.inventory-container > div[style*="marginTop"] {
+  animation: slideInRight 0.4s var(--ease-out) both;
 }

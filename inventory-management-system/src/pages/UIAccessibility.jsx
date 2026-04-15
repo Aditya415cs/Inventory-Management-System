@@ -139,7 +139,7 @@ const UIAccessibility = () => {
 
   return (
     <div className="ui-container">
-      <h1>AI Raw Material Planner</h1>
+      <h1>Sales Tracker</h1>
 
       {loading ? (
         <p>Loading...</p>
