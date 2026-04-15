@@ -4,3 +4,5 @@ pandas
 xgboost
 scipy
 scikit-learn
+supabase
+python-dotenv

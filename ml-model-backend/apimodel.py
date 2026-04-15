@@ -1,6 +1,8 @@
 from supabase import create_client
 import os
-from datetime import datetime, timedelta
+from dotenv import load_dotenv
+load_dotenv()
+from datetime import datetime, timedelta,timezone
 from functools import lru_cache
 from pathlib import Path
 import pickle
@@ -21,8 +23,8 @@ FEATURE_COLUMNS = [
     "Sun",
     "Weekly_Total",
 ]
-SUPABASE_URL = "https://luemjpymvwjlgbnctlby.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZW1qcHltdndqbGdibmN0bGJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4OTgyMzMsImV4cCI6MjA5MTQ3NDIzM30.frr441ia8BeuFNUeBcMkHedqZm4xB6Zr0N43XMhMEho"
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
@@ -61,7 +63,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173","https://inventory-management-system-rose-xi.vercel.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -100,7 +102,7 @@ def predict_sales(payload: SalesInput):
 
 
 def get_last_7_days_sales():
-    today = datetime.utcnow()
+    today = datetime.now(timezone.utc)
 
     week_data = {
         "Mon": 0, "Tue": 0, "Wed": 0,
@@ -151,6 +153,9 @@ def get_last_7_days_sales():
             continue
 
     week_data["Weekly_Total"] = sum(week_data.values())
+    print(f"Querying from: {seven_days_ago}")
+    print(f"Rows returned: {len(data)}")
+    print(f"Week data: {week_data}")
 
     return week_data
 
