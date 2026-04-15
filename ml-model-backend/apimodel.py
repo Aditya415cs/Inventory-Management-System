@@ -158,6 +158,7 @@ def get_last_7_days_sales():
 
 @app.get("/predict-auto")
 def predict_auto():
+    print("PREDICT AUTO HIT 🚀")
     try:
         model = load_model()
 
